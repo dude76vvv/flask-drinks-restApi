@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  flask_app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_URL=postgresql://root:postgres@pg_db:5432/drinksDb
+    depends_on:
+      - pg_db
+
+  pg_db:
+    image: postgres:12
+    ports:
+      - "54320:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=root
+      - POSTGRES_DB=drinksDb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
